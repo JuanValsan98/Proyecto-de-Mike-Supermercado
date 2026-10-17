@@ -1,0 +1,17 @@
+package com.example.demosupermercado.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class ClienteRequestDTO {
+
+    private String nombre;
+
+    private Long documento;
+    
+    private int telefono;
+}
