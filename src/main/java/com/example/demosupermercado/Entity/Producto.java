@@ -7,13 +7,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
 @Data 
 public class Producto {
 
@@ -37,5 +33,17 @@ public class Producto {
     @ManyToOne 
     @JoinColumn(name = "Categoria Id")
     private Categoria categoria;
+
+    public Producto() {
+    }
+
+    public Producto(Long codigoDeBarras, Long id, String nombre, Long stock, double precio, Categoria categoria) {
+        this.CodigoDeBarras = codigoDeBarras;
+        this.id = id;
+        this.nombre = nombre;
+        this.stock = stock;
+        this.precio = precio;
+        this.categoria = categoria;
+    }
 
 }

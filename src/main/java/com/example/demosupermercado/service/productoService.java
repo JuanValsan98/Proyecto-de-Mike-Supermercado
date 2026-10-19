@@ -6,24 +6,22 @@ import com.example.demosupermercado.Entity.Categoria;
 import com.example.demosupermercado.Entity.Producto;
 import com.example.demosupermercado.dto.ProductoRequestDTO;
 import com.example.demosupermercado.dto.ProductoResponseDTO;
-import com.example.demosupermercado.dto.CategoriaRequestDTO;
-import com.example.demosupermercado.dto.CategoriaResponseDTO;
 
 import com.example.demosupermercado.repository.ProductoRepository;
 import com.example.demosupermercado.repository.CategoriaRepository;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-@AllArgsConstructor 
 
-@Data 
-
+@Data
 @Service 
-
-
 public class productoService {
      private final ProductoRepository ProductoRepository; 
      private final CategoriaRepository CategoriaRepository; 
+
+    public productoService(ProductoRepository productoRepository, CategoriaRepository categoriaRepository) {
+        this.ProductoRepository = productoRepository;
+        this.CategoriaRepository = categoriaRepository;
+    }
 
     public ProductoResponseDTO createProducto (ProductoRequestDTO request) {
         

@@ -2,13 +2,9 @@ package com.example.demosupermercado.dto;
 
 import java.sql.Date;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class VentaResponseDTO {
 
     private Long id;
@@ -16,4 +12,13 @@ public class VentaResponseDTO {
     private Date fecha;
     
     private double total;
+
+    public VentaResponseDTO() {
+    }
+
+    public VentaResponseDTO(Long id, Date fecha, double total) {
+        this.id = id;
+        this.fecha = fecha;
+        this.total = total;
+    }
 }

@@ -1,16 +1,13 @@
 package com.example.demosupermercado.Entity;
 
-import jakarta.annotation.Generated;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Entity 
-@AllArgsConstructor
 @Data 
 public class DetalleVenta {
 
@@ -27,5 +24,15 @@ public class DetalleVenta {
 
     @Column(name = "Sub Total")
     private double subtotal;
-    
+
+    public DetalleVenta() {
+    }
+
+    public DetalleVenta(Long id, Long cantidad, double precioUnitario, double subtotal) {
+        this.id = id;
+        this.cantidad = cantidad;
+        this.precioUnitario = precioUnitario;
+        this.subtotal = subtotal;
+    }
+
 }

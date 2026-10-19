@@ -5,11 +5,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Entity 
-@AllArgsConstructor 
 @Data 
 public class Cliente {
 
@@ -25,5 +23,15 @@ public class Cliente {
 
     @Column(name = "telefono")
     private int telefono;
-    
+
+    public Cliente() {
+    }
+
+    public Cliente(Long id, String nombre, Long documento, int telefono) {
+        this.id = id;
+        this.nombre = nombre;
+        this.documento = documento;
+        this.telefono = telefono;
+    }
+
 }

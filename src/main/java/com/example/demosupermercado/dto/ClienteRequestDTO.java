@@ -1,12 +1,8 @@
 package com.example.demosupermercado.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class ClienteRequestDTO {
 
     private String nombre;
@@ -14,4 +10,13 @@ public class ClienteRequestDTO {
     private Long documento;
     
     private int telefono;
+
+    public ClienteRequestDTO() {
+    }
+
+    public ClienteRequestDTO(String nombre, Long documento, int telefono) {
+        this.nombre = nombre;
+        this.documento = documento;
+        this.telefono = telefono;
+    }
 }

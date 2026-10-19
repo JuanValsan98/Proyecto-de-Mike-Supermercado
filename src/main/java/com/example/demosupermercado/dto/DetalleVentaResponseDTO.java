@@ -1,12 +1,8 @@
 package com.example.demosupermercado.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class DetalleVentaResponseDTO {
 
     private Long id;
@@ -16,4 +12,14 @@ public class DetalleVentaResponseDTO {
     private double precioUnitario;
     
     private double subtotal;
+
+    public DetalleVentaResponseDTO() {
+    }
+
+    public DetalleVentaResponseDTO(Long id, Long cantidad, double precioUnitario, double subtotal) {
+        this.id = id;
+        this.cantidad = cantidad;
+        this.precioUnitario = precioUnitario;
+        this.subtotal = subtotal;
+    }
 }

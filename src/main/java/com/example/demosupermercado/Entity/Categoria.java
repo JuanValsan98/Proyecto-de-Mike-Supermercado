@@ -5,13 +5,9 @@ import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity 
-@AllArgsConstructor 
-@NoArgsConstructor
 @Data 
 public class Categoria {
 
@@ -25,5 +21,14 @@ public class Categoria {
 
     @Column(name = "Descripción")
     private String descripcion;
+
+    public Categoria() {
+    }
+
+    public Categoria(Long id, String nombre, String descripcion) {
+        this.id = id;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+    }
     
 }

@@ -1,12 +1,8 @@
 package com.example.demosupermercado.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class DetalleVentaRequestDTO {
 
     private Long cantidad;
@@ -14,4 +10,13 @@ public class DetalleVentaRequestDTO {
     private double precioUnitario;
     
     private double subtotal;
+
+    public DetalleVentaRequestDTO() {
+    }
+
+    public DetalleVentaRequestDTO(Long cantidad, double precioUnitario, double subtotal) {
+        this.cantidad = cantidad;
+        this.precioUnitario = precioUnitario;
+        this.subtotal = subtotal;
+    }
 }

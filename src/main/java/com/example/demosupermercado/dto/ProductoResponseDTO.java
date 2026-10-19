@@ -1,12 +1,8 @@
 package com.example.demosupermercado.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class ProductoResponseDTO {
 
     private Long id;
@@ -20,4 +16,16 @@ public class ProductoResponseDTO {
     private double precio;
 
     private Long categoriaId;
+
+    public ProductoResponseDTO() {
+    }
+
+    public ProductoResponseDTO(Long id, Long codigoDeBarras, String nombre, Long stock, double precio, Long categoriaId) {
+        this.id = id;
+        this.codigoDeBarras = codigoDeBarras;
+        this.nombre = nombre;
+        this.stock = stock;
+        this.precio = precio;
+        this.categoriaId = categoriaId;
+    }
 }

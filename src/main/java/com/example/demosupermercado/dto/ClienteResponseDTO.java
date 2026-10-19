@@ -1,12 +1,8 @@
 package com.example.demosupermercado.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class ClienteResponseDTO {
 
     private Long id;
@@ -16,4 +12,14 @@ public class ClienteResponseDTO {
     private Long documento;
     
     private int telefono;
+
+    public ClienteResponseDTO() {
+    }
+
+    public ClienteResponseDTO(Long id, String nombre, Long documento, int telefono) {
+        this.id = id;
+        this.nombre = nombre;
+        this.documento = documento;
+        this.telefono = telefono;
+    }
 }
