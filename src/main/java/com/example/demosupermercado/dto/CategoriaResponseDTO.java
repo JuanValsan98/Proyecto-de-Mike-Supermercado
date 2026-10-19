@@ -11,6 +11,10 @@ public class CategoriaResponseDTO {
     
     private String descripcion;
 
+    public CategoriaResponseDTO() {
+
+    }
+
     public CategoriaResponseDTO(Long id, String nombre, String descripcion) {
         this.id = id;
         this.nombre = nombre;
