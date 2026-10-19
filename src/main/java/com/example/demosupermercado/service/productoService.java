@@ -1,5 +1,8 @@
 package com.example.demosupermercado.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.example.demosupermercado.Entity.Categoria;
@@ -11,6 +14,7 @@ import com.example.demosupermercado.repository.ProductoRepository;
 import com.example.demosupermercado.repository.CategoriaRepository;
 
 import lombok.Data;
+
 
 @Data
 @Service 
@@ -46,5 +50,26 @@ public class productoService {
         response.setCodigoDeBarras(producto.getCodigoDeBarras());
         return response;
     }
+
+    public List<ProductoResponseDTO>  getAllProductos () {
+        List<ProductoResponseDTO> response = new ArrayList<>();
+        List<Producto> usersFound = ProductoRepository.findAll();
+
+        for (Producto productoFound : usersFound) {
+            ProductoResponseDTO producto = new ProductoResponseDTO();
+            producto.setId(productoFound.getId());
+            producto.setNombre(productoFound.getNombre());
+            producto.setCodigoDeBarras(productoFound.getCodigoDeBarras());
+            producto.setPrecio(productoFound.getPrecio());
+            producto.setCategoriaNombre(productoFound.getCategoria().getNombre());
+            
+            
+            response.add(producto);
+        }
+        return response;
+
+
+    }
+    
     
 }

@@ -17,15 +17,18 @@ public class ProductoResponseDTO {
 
     private Long categoriaId;
 
+    private String categoriaNombre;
+
     public ProductoResponseDTO() {
     }
 
-    public ProductoResponseDTO(Long id, Long codigoDeBarras, String nombre, Long stock, double precio, Long categoriaId) {
+    public ProductoResponseDTO(Long id, Long codigoDeBarras, String nombre, Long stock, double precio, Long categoriaId, String categoriaNombre) {
         this.id = id;
         this.codigoDeBarras = codigoDeBarras;
         this.nombre = nombre;
         this.stock = stock;
         this.precio = precio;
         this.categoriaId = categoriaId;
+        this.categoriaNombre = categoriaNombre;
     }
 }
