@@ -13,7 +13,6 @@ import jakarta.validation.Valid;
 
 import com.example.demosupermercado.dto.VentaRequestDTO;
 import com.example.demosupermercado.dto.VentaResponseDTO;
-@RestController
 @RequestMapping("/api/ventas")
 public class ventaController {
 
@@ -23,8 +22,8 @@ public class ventaController {
      }
 
     @PostMapping
-public ResponseEntity<VentaResponseDTO> crearVenta(@Valid @RequestBody VentaRequestDTO request) {
-    return ResponseEntity.status(HttpStatus.CREATED).body(ventaService.crearVenta(request));
+public ResponseEntity<VentaResponseDTO> createVenta(@Valid @RequestBody VentaRequestDTO request) {
+    return ResponseEntity.status(HttpStatus.CREATED).body(ventaService.createVenta(request));
     
 }
 

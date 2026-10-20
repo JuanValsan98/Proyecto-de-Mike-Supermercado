@@ -43,7 +43,7 @@ public class ventaService {
 
 
     @Transactional 
-public VentaResponseDTO crearVenta(VentaRequestDTO request) {
+public VentaResponseDTO createVenta(VentaRequestDTO request) {
 
         Cliente cliente = clienteRepository.findById(request.getClienteId())
     .orElseThrow(() -> new RecursoNoEncontradoException("Cliente no encontrado"));

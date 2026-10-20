@@ -14,6 +14,10 @@ public class ProveedorResponseDTO {
 
     private String correo;
 
+    public ProveedorResponseDTO(){
+        
+    }
+
     public ProveedorResponseDTO(Long id, String nombre, String telefono, String correo){
 
     this.id = id;    
