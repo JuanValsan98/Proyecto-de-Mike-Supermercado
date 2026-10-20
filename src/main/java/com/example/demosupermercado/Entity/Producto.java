@@ -17,25 +17,25 @@ import lombok.ToString;
 @Data 
 public class Producto {
 
-    @Column(name = "Codigo_de_barras", unique = true)
-    private Long CodigoDeBarras;
+    @Column(name = "codigo_de_barras", unique = true)
+    private String codigoDeBarras;
 
     @Id 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id")
+    @Column(name = "id")
     private Long id;
 
-    @Column(name = "Nombre")
+    @Column(name = "nombre", nullable = false)
     private String nombre;
 
-    @Column(name = "Stock")
+    @Column(name = "stock", nullable = false)
     private Long stock;
 
-    @Column(name = "Precio")
+    @Column(name = "precio", nullable = false, precision = 12, scale = 2)
     private BigDecimal precio;
 
     @ManyToOne 
-    @JoinColumn(name = "Categoria_Id")
+    @JoinColumn(name = "categoria_id", nullable = false)
     private Categoria categoria;
 
     @ManyToOne 
@@ -47,8 +47,8 @@ public class Producto {
     public Producto() {
     }
 
-    public Producto(Long codigoDeBarras, Long id, String nombre, Long stock, BigDecimal precio, Categoria categoria) {
-        this.CodigoDeBarras = codigoDeBarras;
+    public Producto(String codigoDeBarras, Long id, String nombre, Long stock, BigDecimal precio, Categoria categoria) {
+        this.codigoDeBarras = codigoDeBarras;
         this.id = id;
         this.nombre = nombre;
         this.stock = stock;

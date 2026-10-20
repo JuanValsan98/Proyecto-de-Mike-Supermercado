@@ -9,7 +9,7 @@ public class ProductoResponseDTO {
 
     private Long id;
 
-    private Long codigoDeBarras;
+    private String codigoDeBarras;
 
     private String nombre;
 
@@ -28,7 +28,7 @@ public class ProductoResponseDTO {
     public ProductoResponseDTO() {
     }
 
-    public ProductoResponseDTO(Long id, Long codigoDeBarras, String nombre, Long stock, BigDecimal precio, Long categoriaId, String categoriaNombre, Long proveedorId, String proveedorNombre) {
+    public ProductoResponseDTO(Long id, String codigoDeBarras, String nombre, Long stock, BigDecimal precio, Long categoriaId, String categoriaNombre, Long proveedorId, String proveedorNombre) {
         this.id = id;
         this.codigoDeBarras = codigoDeBarras;
         this.nombre = nombre;

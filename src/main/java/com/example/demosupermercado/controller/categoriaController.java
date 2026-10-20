@@ -2,8 +2,7 @@ package com.example.demosupermercado.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,14 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demosupermercado.dto.CategoriaRequestDTO;
 import com.example.demosupermercado.dto.CategoriaResponseDTO;
-import com.example.demosupermercado.dto.ProductoRequestDTO;
-import com.example.demosupermercado.dto.ProductoResponseDTO;
 import com.example.demosupermercado.service.categoriaService;
 
-import java.util.List;
-
-@Controller 
-@RestController 
+@RestController
+@RequestMapping("/api/categorias")
 public class categoriaController {
 
     private final categoriaService categoriaService;
@@ -28,7 +23,7 @@ public class categoriaController {
     }
 
     @PostMapping
-    public ResponseEntity<CategoriaResponseDTO> createCategoria(@RequestBody CategoriaRequestDTO request) {
+    public ResponseEntity<CategoriaResponseDTO> createCategoria(@Valid @RequestBody CategoriaRequestDTO request) {
         CategoriaResponseDTO response = categoriaService.createCategoria(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }

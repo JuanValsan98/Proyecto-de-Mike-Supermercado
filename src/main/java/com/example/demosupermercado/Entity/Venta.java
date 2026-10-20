@@ -24,17 +24,17 @@ public class Venta {
 
     @Id 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id")
+    @Column(name = "id")
     private Long id;
 
-    @Column(name = "Fecha")
+    @Column(name = "fecha", nullable = false)
     private LocalDateTime fecha;
 
-    @Column(name = "Total")
+    @Column(name = "total", nullable = false, precision = 12, scale = 2)
     private BigDecimal total;
 
     @ManyToOne 
-    @JoinColumn(name = "Cliente_Id")
+    @JoinColumn(name = "cliente_id", nullable = false)
     private Cliente cliente;
 
     @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL)

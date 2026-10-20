@@ -2,10 +2,10 @@ package com.example.demosupermercado.service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
-
-import lombok.Data;
 
 import com.example.demosupermercado.dto.VentaRequestDTO;
 import com.example.demosupermercado.dto.VentaResponseDTO;
@@ -20,10 +20,10 @@ import com.example.demosupermercado.Entity.Cliente;
 import com.example.demosupermercado.Entity.DetalleVenta;
 import com.example.demosupermercado.Entity.Producto;
 import com.example.demosupermercado.dto.DetalleVentaRequestDTO;
-import com.example.demosupermercado.dto.DetalleVentaResponseDTO;
 import com.example.demosupermercado.exception.RecursoNoEncontradoException;
+import com.example.demosupermercado.exception.StockInsuficienteException;
+import com.example.demosupermercado.dto.DetalleVentaResponseDTO;
 
-@Data 
 @Service 
 public class ventaService {
 
@@ -60,7 +60,7 @@ public VentaResponseDTO crearVenta(VentaRequestDTO request) {
         .orElseThrow(() -> new RecursoNoEncontradoException("Producto no encontrado"));
 
         if (producto.getStock() < item.getCantidad()) {
-    throw new IllegalArgumentException("Stock insuficiente para " + producto.getNombre());
+            throw new StockInsuficienteException("Stock insuficiente para " + producto.getNombre());
         }
         DetalleVenta detalle = new DetalleVenta();
         detalle.setProducto(producto);
@@ -83,10 +83,22 @@ public VentaResponseDTO crearVenta(VentaRequestDTO request) {
         venta.setTotal(total);
         Venta ventaGuardada = ventaRepository.save(venta);
         
+        List<DetalleVentaResponseDTO> detallesResponse = ventaGuardada.getDetalles().stream()
+                .map(detalle -> new DetalleVentaResponseDTO(
+                        detalle.getId(),
+                        detalle.getCantidad(),
+                        detalle.getPrecioUnitario(),
+                        detalle.getSubtotal(),
+                        detalle.getProducto().getId(),
+                        detalle.getProducto().getNombre()))
+                .collect(Collectors.toList());
+
         return new VentaResponseDTO(
             ventaGuardada.getId(),
             ventaGuardada.getFecha(),
-            ventaGuardada.getTotal()
+            ventaGuardada.getTotal(),
+            ventaGuardada.getCliente().getId(),
+            detallesResponse
         );
         
 

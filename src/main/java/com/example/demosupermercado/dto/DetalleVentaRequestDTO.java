@@ -2,28 +2,26 @@ package com.example.demosupermercado.dto;
 
 
 
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Data;
 
 @Data
 public class DetalleVentaRequestDTO {
 
-    @jakarta.validation.constraints.NotNull 
+    @NotNull
     @Positive 
     private Long cantidad;
 
-    private double precioUnitario;
-    
-    private double subtotal;
-
+    @NotNull
+    @Positive
     private Long productoId;
 
     public DetalleVentaRequestDTO() {
     }
 
-    public DetalleVentaRequestDTO(Long cantidad, double precioUnitario, double subtotal) {
+    public DetalleVentaRequestDTO(Long cantidad, Long productoId) {
         this.cantidad = cantidad;
-        this.precioUnitario = precioUnitario;
-        this.subtotal = subtotal;
+        this.productoId = productoId;
     }
 }

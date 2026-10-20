@@ -20,6 +20,10 @@ public class DetalleVentaResponseDTO {
     
     private BigDecimal subtotal;
 
+    private Long productoId;
+
+    private String productoNombre;
+
     public DetalleVentaResponseDTO() {
     }
 
@@ -28,5 +32,17 @@ public class DetalleVentaResponseDTO {
         this.cantidad = cantidad;
         this.precioUnitario = precioUnitario;
         this.subtotal = subtotal;
+    }
+
+    public DetalleVentaResponseDTO(
+            Long id,
+            Long cantidad,
+            BigDecimal precioUnitario,
+            BigDecimal subtotal,
+            Long productoId,
+            String productoNombre) {
+        this(id, cantidad, precioUnitario, subtotal);
+        this.productoId = productoId;
+        this.productoNombre = productoNombre;
     }
 }

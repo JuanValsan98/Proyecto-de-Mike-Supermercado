@@ -10,11 +10,11 @@ public class ProveedorResponseDTO {
 
     private String nombre;
 
-    private Long telefono;
+    private String telefono;
 
     private String correo;
 
-    public ProveedorResponseDTO(Long id, String nombre, Long telefono, String correo){
+    public ProveedorResponseDTO(Long id, String nombre, String telefono, String correo){
 
     this.id = id;    
     this.nombre = nombre;
@@ -24,4 +24,3 @@ public class ProveedorResponseDTO {
     
 }
     
-

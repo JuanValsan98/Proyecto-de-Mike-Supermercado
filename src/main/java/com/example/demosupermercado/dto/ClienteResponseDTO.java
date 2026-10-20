@@ -9,14 +9,14 @@ public class ClienteResponseDTO {
 
     private String nombre;
 
-    private Long documento;
+    private String documento;
     
-    private int telefono;
+    private String telefono;
 
     public ClienteResponseDTO() {
     }
 
-    public ClienteResponseDTO(Long id, String nombre, Long documento, int telefono) {
+    public ClienteResponseDTO(Long id, String nombre, String documento, String telefono) {
         this.id = id;
         this.nombre = nombre;
         this.documento = documento;

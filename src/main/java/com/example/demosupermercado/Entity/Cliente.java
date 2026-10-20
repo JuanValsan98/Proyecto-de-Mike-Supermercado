@@ -24,11 +24,11 @@ public class Cliente {
     @Column(name = "nombre")
     private String nombre;
 
-    @Column(name = "documento", unique = true )
-    private Long documento;
+    @Column(name = "documento", unique = true)
+    private String documento;
 
     @Column(name = "telefono")
-    private int telefono;
+    private String telefono;
 
     @OneToMany(mappedBy = "cliente")
     @ToString.Exclude
@@ -38,7 +38,7 @@ public class Cliente {
     public Cliente() {
     }
 
-    public Cliente(Long id, String nombre, Long documento, int telefono) {
+    public Cliente(Long id, String nombre, String documento, String telefono) {
         this.id = id;
         this.nombre = nombre;
         this.documento = documento;

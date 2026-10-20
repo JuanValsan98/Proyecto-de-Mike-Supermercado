@@ -19,26 +19,26 @@ public class DetalleVenta {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id 
-    @Column(name = "Id")
+    @Column(name = "id")
     private Long id;
 
-    @Column(name = "Cantidad")
+    @Column(name = "cantidad", nullable = false)
     private Long cantidad;
 
-    @Column(name = "Precio_Unitario")
+    @Column(name = "precio_unitario", nullable = false, precision = 12, scale = 2)
     private BigDecimal precioUnitario;
 
-    @Column(name = "Sub_Total")
+    @Column(name = "sub_total", nullable = false, precision = 12, scale = 2)
     private BigDecimal subtotal;
 
     @ManyToOne 
-    @JoinColumn(name = "Venta_Id")
+    @JoinColumn(name = "venta_id", nullable = false)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Venta venta;
 
     @ManyToOne
-    @JoinColumn(name = "Producto_id")
+    @JoinColumn(name = "producto_id", nullable = false)
     private Producto producto;
 
     public DetalleVenta() {

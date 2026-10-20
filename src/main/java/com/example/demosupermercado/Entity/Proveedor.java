@@ -27,7 +27,7 @@ public class Proveedor {
     private String nombre;
 
     @Column(name = "Telefono")
-    private Long telefono;
+    private String telefono;
 
     @Column(name = "Correo")
     private String correo;
@@ -41,7 +41,7 @@ public class Proveedor {
 
     }
 
-    public Proveedor(Long id, String nombre, Long telefono, String correo){
+    public Proveedor(Long id, String nombre, String telefono, String correo){
         this.id = id;
         this.nombre = nombre;
         this.telefono = telefono;

@@ -1,10 +1,12 @@
 package com.example.demosupermercado.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data
 public class CategoriaRequestDTO {
 
+    @NotBlank
     private String nombre;
     
     private String descripcion;

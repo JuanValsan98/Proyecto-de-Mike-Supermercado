@@ -11,96 +11,74 @@ import com.example.demosupermercado.Entity.Proveedor;
 import com.example.demosupermercado.dto.ProductoRequestDTO;
 import com.example.demosupermercado.dto.ProductoResponseDTO;
 
-import com.example.demosupermercado.repository.ProductoRepository;
+import com.example.demosupermercado.exception.ConflictoDeRecursoException;
+import com.example.demosupermercado.exception.RecursoNoEncontradoException;
 import com.example.demosupermercado.repository.CategoriaRepository;
+import com.example.demosupermercado.repository.ProductoRepository;
 import com.example.demosupermercado.repository.ProveedorRepository;
 
-import lombok.Data;
-
-
-@Data
 @Service 
 public class productoService {
-     private final ProductoRepository ProductoRepository; 
-     private final CategoriaRepository CategoriaRepository; 
-     private final ProveedorRepository proveedorRepository;
+    private final ProductoRepository productoRepository;
+    private final CategoriaRepository categoriaRepository;
+    private final ProveedorRepository proveedorRepository;
 
     public productoService(ProductoRepository productoRepository, CategoriaRepository categoriaRepository, ProveedorRepository proveedorRepository) {
-        this.ProductoRepository = productoRepository;
-        this.CategoriaRepository = categoriaRepository;
+        this.productoRepository = productoRepository;
+        this.categoriaRepository = categoriaRepository;
         this.proveedorRepository = proveedorRepository;
     }
 
-    public ProductoResponseDTO createProducto (ProductoRequestDTO request) {
-    
+    public ProductoResponseDTO createProducto(ProductoRequestDTO request) {
         Producto producto = new Producto();
         producto.setNombre(request.getNombre());
         producto.setStock(request.getStock());
         producto.setPrecio(request.getPrecio());
         producto.setCodigoDeBarras(request.getCodigoDeBarras());
 
-        Categoria Categoria = CategoriaRepository.findById(request.getCategoriaId())
-    .orElseThrow(() -> new IllegalArgumentException("No existe esa categoría"));
+        Categoria categoria = categoriaRepository.findById(request.getCategoriaId())
+                .orElseThrow(() -> new RecursoNoEncontradoException("Categoría no encontrada"));
 
-        producto.setCategoria(Categoria);
+        producto.setCategoria(categoria);
         if (request.getProveedorId() != null) {
             Proveedor proveedor = proveedorRepository.findById(request.getProveedorId())
-                    .orElseThrow(() -> new IllegalArgumentException("No existe ese proveedor"));
+                    .orElseThrow(() -> new RecursoNoEncontradoException("Proveedor no encontrado"));
             producto.setProveedor(proveedor);
         }
-        ProductoRepository.save(producto);
-
-        ProductoResponseDTO response = new ProductoResponseDTO();
-        response.setId(producto.getId());
-        response.setNombre(producto.getNombre());
-        response.setPrecio(producto.getPrecio());
-        response.setStock(producto.getStock());
-        response.setCodigoDeBarras(producto.getCodigoDeBarras());
-        if (producto.getProveedor() != null) {
-            response.setProveedorId(producto.getProveedor().getId());
-            response.setProveedorNombre(producto.getProveedor().getNombre());
+        if (productoRepository.existsByCodigoDeBarras(request.getCodigoDeBarras())) {
+            throw new ConflictoDeRecursoException("Ya existe un producto con ese código de barras");
         }
-        return response;
+        producto = productoRepository.save(producto);
+
+        return convertirADto(producto);
     }
 
 /*------------------------------------------------------------------------------------------------------------------------------------ */
 
-    public List<ProductoResponseDTO>  getAllProductos () {
+    public List<ProductoResponseDTO> getAllProductos() {
         List<ProductoResponseDTO> response = new ArrayList<>();
-        List<Producto> usersFound = ProductoRepository.findAll();
+        List<Producto> productos = productoRepository.findAll();
 
-        for (Producto productoFound : usersFound) {
-            ProductoResponseDTO producto = new ProductoResponseDTO();
-            producto.setId(productoFound.getId());
-            producto.setNombre(productoFound.getNombre());
-            producto.setCodigoDeBarras(productoFound.getCodigoDeBarras());
-            producto.setPrecio(productoFound.getPrecio());
-            producto.setCategoriaNombre(productoFound.getCategoria().getNombre());
-            if (productoFound.getProveedor() != null) {
-                producto.setProveedorId(productoFound.getProveedor().getId());
-                producto.setProveedorNombre(productoFound.getProveedor().getNombre());
-            }
-            
-            
-            response.add(producto);
+        for (Producto producto : productos) {
+            response.add(convertirADto(producto));
         }
         return response;
-
-
     }
 
-/*------------------------------------------------------------------------------------------------------------------------------------ */  
-
     public ProductoResponseDTO getProductoById(Long id) {
-    Producto producto = ProductoRepository.findById(id)
-            .orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
+        Producto producto = productoRepository.findById(id)
+                .orElseThrow(() -> new RecursoNoEncontradoException("Producto no encontrado"));
+        return convertirADto(producto);
+    }
 
+    private ProductoResponseDTO convertirADto(Producto producto) {
         ProductoResponseDTO response = new ProductoResponseDTO();
         response.setId(producto.getId());
-        response.setNombre(producto.getNombre());
-        response.setPrecio(producto.getPrecio());
-        response.setStock(producto.getStock());
         response.setCodigoDeBarras(producto.getCodigoDeBarras());
+        response.setNombre(producto.getNombre());
+        response.setStock(producto.getStock());
+        response.setPrecio(producto.getPrecio());
+        response.setCategoriaId(producto.getCategoria().getId());
         response.setCategoriaNombre(producto.getCategoria().getNombre());
         if (producto.getProveedor() != null) {
             response.setProveedorId(producto.getProveedor().getId());
@@ -108,7 +86,4 @@ public class productoService {
         }
         return response;
     }
-    
-    
-    
 }

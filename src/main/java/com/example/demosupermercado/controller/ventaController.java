@@ -2,7 +2,6 @@ package com.example.demosupermercado.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,13 +13,8 @@ import jakarta.validation.Valid;
 
 import com.example.demosupermercado.dto.VentaRequestDTO;
 import com.example.demosupermercado.dto.VentaResponseDTO;
-@Controller 
-@RestController 
-
-
-
-
-@RequestMapping("/Api/Venta") 
+@RestController
+@RequestMapping("/api/ventas")
 public class ventaController {
 
     private final ventaService ventaService;
