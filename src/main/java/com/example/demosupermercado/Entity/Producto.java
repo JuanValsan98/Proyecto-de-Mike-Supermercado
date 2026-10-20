@@ -9,13 +9,15 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.EqualsAndHashCode;
 import lombok.Data;
+import lombok.ToString;
 
 @Entity
 @Data 
 public class Producto {
 
-    @Column(name = "Codigo de barras", unique = true)
+    @Column(name = "Codigo_de_barras", unique = true)
     private Long CodigoDeBarras;
 
     @Id 
@@ -33,8 +35,14 @@ public class Producto {
     private BigDecimal precio;
 
     @ManyToOne 
-    @JoinColumn(name = "Categoria Id")
+    @JoinColumn(name = "Categoria_Id")
     private Categoria categoria;
+
+    @ManyToOne 
+    @JoinColumn(name = "proveedor_id")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Proveedor proveedor;
 
     public Producto() {
     }

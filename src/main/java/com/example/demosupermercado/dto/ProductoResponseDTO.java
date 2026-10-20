@@ -21,10 +21,14 @@ public class ProductoResponseDTO {
 
     private String categoriaNombre;
 
+    private Long proveedorId;
+
+    private String proveedorNombre;
+
     public ProductoResponseDTO() {
     }
 
-    public ProductoResponseDTO(Long id, Long codigoDeBarras, String nombre, Long stock, BigDecimal precio, Long categoriaId, String categoriaNombre) {
+    public ProductoResponseDTO(Long id, Long codigoDeBarras, String nombre, Long stock, BigDecimal precio, Long categoriaId, String categoriaNombre, Long proveedorId, String proveedorNombre) {
         this.id = id;
         this.codigoDeBarras = codigoDeBarras;
         this.nombre = nombre;
@@ -32,5 +36,7 @@ public class ProductoResponseDTO {
         this.precio = precio;
         this.categoriaId = categoriaId;
         this.categoriaNombre = categoriaNombre;
+        this.proveedorId = proveedorId;
+        this.proveedorNombre = proveedorNombre;
     }
 }

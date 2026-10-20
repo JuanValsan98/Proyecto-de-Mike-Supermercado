@@ -17,14 +17,17 @@ public class ProductoRequestDTO {
 
     private Long categoriaId;
 
+    private Long proveedorId;
+
     public ProductoRequestDTO() {
     }
 
-    public ProductoRequestDTO(Long codigoDeBarras, String nombre, Long stock, BigDecimal precio, Long categoriaId) {
+    public ProductoRequestDTO(Long codigoDeBarras, String nombre, Long stock, BigDecimal precio, Long categoriaId, Long proveedorId) {
         this.codigoDeBarras = codigoDeBarras;
         this.nombre = nombre;
         this.stock = stock;
         this.precio = precio;
         this.categoriaId = categoriaId;
+        this.proveedorId = proveedorId;
     }
 }

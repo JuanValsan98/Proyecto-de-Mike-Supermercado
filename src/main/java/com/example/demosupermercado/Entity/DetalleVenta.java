@@ -25,20 +25,20 @@ public class DetalleVenta {
     @Column(name = "Cantidad")
     private Long cantidad;
 
-    @Column(name = "Precio Unitario")
+    @Column(name = "Precio_Unitario")
     private BigDecimal precioUnitario;
 
-    @Column(name = "Sub Total")
+    @Column(name = "Sub_Total")
     private BigDecimal subtotal;
 
     @ManyToOne 
-    @JoinColumn(name = "Venta Id")
+    @JoinColumn(name = "Venta_Id")
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Venta venta;
 
     @ManyToOne
-    @JoinColumn(name = "Producto id")
+    @JoinColumn(name = "Producto_id")
     private Producto producto;
 
     public DetalleVenta() {

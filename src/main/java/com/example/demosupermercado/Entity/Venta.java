@@ -34,7 +34,7 @@ public class Venta {
     private BigDecimal total;
 
     @ManyToOne 
-    @JoinColumn(name = "Cliente Id")
+    @JoinColumn(name = "Cliente_Id")
     private Cliente cliente;
 
     @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL)

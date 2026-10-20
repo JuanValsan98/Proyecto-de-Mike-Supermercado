@@ -1,12 +1,17 @@
 package com.example.demosupermercado.Entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import lombok.EqualsAndHashCode;
 import lombok.Data;
+import lombok.ToString;
 
 @Data 
 @Entity 
@@ -15,6 +20,7 @@ public class Proveedor {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY )
     @Column(name = "Id")
+    @Id 
     private Long id;
 
     @Column(name = "Nombre")
@@ -26,9 +32,10 @@ public class Proveedor {
     @Column(name = "Correo")
     private String correo;
 
-    @OneToMany 
-    @JoinColumn(name = "Producto Id")
-    private Producto producto;
+    @OneToMany(mappedBy = "proveedor")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private List<Producto> productos = new ArrayList<>();
 
     public Proveedor(){
 
