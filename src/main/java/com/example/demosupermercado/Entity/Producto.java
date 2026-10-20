@@ -1,5 +1,7 @@
 package com.example.demosupermercado.Entity;
 
+import java.math.BigDecimal;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -28,7 +30,7 @@ public class Producto {
     private Long stock;
 
     @Column(name = "Precio")
-    private double precio;
+    private BigDecimal precio;
 
     @ManyToOne 
     @JoinColumn(name = "Categoria Id")
@@ -37,7 +39,7 @@ public class Producto {
     public Producto() {
     }
 
-    public Producto(Long codigoDeBarras, Long id, String nombre, Long stock, double precio, Categoria categoria) {
+    public Producto(Long codigoDeBarras, Long id, String nombre, Long stock, BigDecimal precio, Categoria categoria) {
         this.CodigoDeBarras = codigoDeBarras;
         this.id = id;
         this.nombre = nombre;

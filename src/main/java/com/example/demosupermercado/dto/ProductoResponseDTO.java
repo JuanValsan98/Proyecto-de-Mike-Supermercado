@@ -1,5 +1,7 @@
 package com.example.demosupermercado.dto;
 
+import java.math.BigDecimal;
+
 import lombok.Data;
 
 @Data
@@ -13,7 +15,7 @@ public class ProductoResponseDTO {
 
     private Long stock;
     
-    private double precio;
+    private BigDecimal precio;
 
     private Long categoriaId;
 
@@ -22,7 +24,7 @@ public class ProductoResponseDTO {
     public ProductoResponseDTO() {
     }
 
-    public ProductoResponseDTO(Long id, Long codigoDeBarras, String nombre, Long stock, double precio, Long categoriaId, String categoriaNombre) {
+    public ProductoResponseDTO(Long id, Long codigoDeBarras, String nombre, Long stock, BigDecimal precio, Long categoriaId, String categoriaNombre) {
         this.id = id;
         this.codigoDeBarras = codigoDeBarras;
         this.nombre = nombre;

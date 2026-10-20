@@ -1,11 +1,17 @@
 package com.example.demosupermercado.Entity;
 
+import java.math.BigDecimal;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import lombok.EqualsAndHashCode;
 import lombok.Data;
+import lombok.ToString;
 
 @Entity 
 @Data 
@@ -20,15 +26,25 @@ public class DetalleVenta {
     private Long cantidad;
 
     @Column(name = "Precio Unitario")
-    private double precioUnitario;
+    private BigDecimal precioUnitario;
 
     @Column(name = "Sub Total")
-    private double subtotal;
+    private BigDecimal subtotal;
+
+    @ManyToOne 
+    @JoinColumn(name = "Venta Id")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Venta venta;
+
+    @ManyToOne
+    @JoinColumn(name = "Producto id")
+    private Producto producto;
 
     public DetalleVenta() {
     }
 
-    public DetalleVenta(Long id, Long cantidad, double precioUnitario, double subtotal) {
+    public DetalleVenta(Long id, Long cantidad, BigDecimal precioUnitario, BigDecimal subtotal) {
         this.id = id;
         this.cantidad = cantidad;
         this.precioUnitario = precioUnitario;

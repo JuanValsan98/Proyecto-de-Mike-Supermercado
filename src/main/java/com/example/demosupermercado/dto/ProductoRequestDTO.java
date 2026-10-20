@@ -1,5 +1,7 @@
 package com.example.demosupermercado.dto;
 
+import java.math.BigDecimal;
+
 import lombok.Data;
 
 @Data
@@ -11,14 +13,14 @@ public class ProductoRequestDTO {
 
     private Long stock;
 
-    private double precio;
+    private BigDecimal precio;
 
     private Long categoriaId;
 
     public ProductoRequestDTO() {
     }
 
-    public ProductoRequestDTO(Long codigoDeBarras, String nombre, Long stock, double precio, Long categoriaId) {
+    public ProductoRequestDTO(Long codigoDeBarras, String nombre, Long stock, BigDecimal precio, Long categoriaId) {
         this.codigoDeBarras = codigoDeBarras;
         this.nombre = nombre;
         this.stock = stock;

@@ -1,0 +1,27 @@
+package com.example.demosupermercado.dto;
+
+import lombok.Data;
+
+@Data 
+
+public class ProveedorResponseDTO {
+
+    private Long id;
+
+    private String nombre;
+
+    private Long telefono;
+
+    private String correo;
+
+    public ProveedorResponseDTO(Long id, String nombre, Long telefono, String correo){
+
+    this.id = id;    
+    this.nombre = nombre;
+    this.telefono = telefono;
+    this.correo = correo;
+    }
+    
+}
+    
+

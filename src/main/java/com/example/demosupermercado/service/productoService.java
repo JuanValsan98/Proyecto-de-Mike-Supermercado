@@ -28,8 +28,7 @@ public class productoService {
     }
 
     public ProductoResponseDTO createProducto (ProductoRequestDTO request) {
-        
-
+    
         Producto producto = new Producto();
         producto.setNombre(request.getNombre());
         producto.setStock(request.getStock());
@@ -51,6 +50,8 @@ public class productoService {
         return response;
     }
 
+/*------------------------------------------------------------------------------------------------------------------------------------ */
+
     public List<ProductoResponseDTO>  getAllProductos () {
         List<ProductoResponseDTO> response = new ArrayList<>();
         List<Producto> usersFound = ProductoRepository.findAll();
@@ -70,6 +71,23 @@ public class productoService {
 
 
     }
+
+/*------------------------------------------------------------------------------------------------------------------------------------ */  
+
+    public ProductoResponseDTO getProductoById(Long id) {
+    Producto producto = ProductoRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
+
+        ProductoResponseDTO response = new ProductoResponseDTO();
+        response.setId(producto.getId());
+        response.setNombre(producto.getNombre());
+        response.setPrecio(producto.getPrecio());
+        response.setStock(producto.getStock());
+        response.setCodigoDeBarras(producto.getCodigoDeBarras());
+        response.setCategoriaNombre(producto.getCategoria().getNombre());
+        return response;
+    }
+    
     
     
 }

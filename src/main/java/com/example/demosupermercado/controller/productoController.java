@@ -3,6 +3,7 @@ package com.example.demosupermercado.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,5 +37,10 @@ public class productoController {
       List<ProductoResponseDTO> response = productoService.getAllProductos();
       return ResponseEntity.status(HttpStatus.OK).body(response);
    }
+
+   @GetMapping("/{id}")
+public ResponseEntity<ProductoResponseDTO> getProductoById(@PathVariable Long id) {
+    return ResponseEntity.ok(productoService.getProductoById(id));
+}
 }
 

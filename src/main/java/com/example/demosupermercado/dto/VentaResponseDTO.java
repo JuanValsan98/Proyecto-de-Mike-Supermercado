@@ -1,6 +1,8 @@
 package com.example.demosupermercado.dto;
 
+import java.math.BigDecimal;
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 import lombok.Data;
 
@@ -9,14 +11,14 @@ public class VentaResponseDTO {
 
     private Long id;
 
-    private Date fecha;
+    private LocalDateTime fecha;
     
-    private double total;
+    private BigDecimal total;
 
     public VentaResponseDTO() {
     }
 
-    public VentaResponseDTO(Long id, Date fecha, double total) {
+    public VentaResponseDTO(Long id, LocalDateTime fecha, BigDecimal total) {
         this.id = id;
         this.fecha = fecha;
         this.total = total;
