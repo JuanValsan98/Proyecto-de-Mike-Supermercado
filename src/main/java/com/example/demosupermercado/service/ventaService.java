@@ -2,6 +2,7 @@ package com.example.demosupermercado.service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -43,47 +44,91 @@ public class ventaService {
 
 
     @Transactional 
-public VentaResponseDTO createVenta(VentaRequestDTO request) {
-
+    public VentaResponseDTO createVenta(VentaRequestDTO request) {
         Cliente cliente = clienteRepository.findById(request.getClienteId())
-    .orElseThrow(() -> new RecursoNoEncontradoException("Cliente no encontrado"));
+                .orElseThrow(() -> new RecursoNoEncontradoException("Cliente no encontrado"));
 
         Venta venta = new Venta();
         venta.setCliente(cliente);
         venta.setFecha(LocalDateTime.now());
         BigDecimal total = BigDecimal.ZERO;
 
-   
-    for (DetalleVentaRequestDTO item : request.getDetalles()) {
+        for (DetalleVentaRequestDTO item : request.getDetalles()) {
+            Producto producto = productoRepository.findById(item.getProductoId())
+                    .orElseThrow(() -> new RecursoNoEncontradoException("Producto no encontrado"));
 
-        Producto producto = productoRepository.findById(item.getProductoId())
-        .orElseThrow(() -> new RecursoNoEncontradoException("Producto no encontrado"));
+            if (producto.getStock() < item.getCantidad()) {
+                throw new StockInsuficienteException("Stock insuficiente para " + producto.getNombre());
+            }
+            DetalleVenta detalle = new DetalleVenta();
+            detalle.setProducto(producto);
+            detalle.setCantidad(item.getCantidad());
+            detalle.setPrecioUnitario(producto.getPrecio());
+            BigDecimal subtotal = producto.getPrecio().multiply(BigDecimal.valueOf(item.getCantidad()));
+            detalle.setSubtotal(subtotal);
 
-        if (producto.getStock() < item.getCantidad()) {
-            throw new StockInsuficienteException("Stock insuficiente para " + producto.getNombre());
+            producto.setStock(producto.getStock() - item.getCantidad());
+            productoRepository.save(producto);
+
+            venta.agregarDetalle(detalle);
+            total = total.add(subtotal);
         }
-        DetalleVenta detalle = new DetalleVenta();
-        detalle.setProducto(producto);
-        detalle.setCantidad(item.getCantidad());
-        detalle.setPrecioUnitario(producto.getPrecio());
-        BigDecimal subtotal = producto.getPrecio().multiply(BigDecimal.valueOf(item.getCantidad()));
-        detalle.setSubtotal(subtotal);
-        
-
-        producto.setStock(producto.getStock() - item.getCantidad());
-        productoRepository.save(producto);
-        
-        detalle.setVenta(venta);             
-        venta.getDetalles().add(detalle);
-    
-
-        total = total.add(subtotal);
-    }
 
         venta.setTotal(total);
         Venta ventaGuardada = ventaRepository.save(venta);
-        
-        List<DetalleVentaResponseDTO> detallesResponse = ventaGuardada.getDetalles().stream()
+        return convertirADto(ventaGuardada);
+    }
+
+    public List<VentaResponseDTO> getAllVentas() {
+        List<VentaResponseDTO> response = new ArrayList<>();
+        for (Venta venta : ventaRepository.findAll()) {
+            response.add(convertirADto(venta));
+        }
+        return response;
+    }
+
+    public VentaResponseDTO getVentaById(Long id) {
+        Venta venta = ventaRepository.findById(id)
+                .orElseThrow(() -> new RecursoNoEncontradoException("Venta no encontrada"));
+        return convertirADto(venta);
+    }
+
+    public List<VentaResponseDTO> getVentasPorCliente(Long clienteId) {
+        if (!clienteRepository.existsById(clienteId)) {
+            throw new RecursoNoEncontradoException("Cliente no encontrado");
+        }
+        List<VentaResponseDTO> response = new ArrayList<>();
+        for (Venta venta : ventaRepository.findByCliente_Id(clienteId)) {
+            response.add(convertirADto(venta));
+        }
+        return response;
+    }
+
+    public List<VentaResponseDTO> getVentasPorFecha(LocalDateTime inicio, LocalDateTime fin) {
+        if (inicio == null || fin == null || fin.isBefore(inicio)) {
+            throw new IllegalArgumentException("El rango de fechas no es válido");
+        }
+        List<VentaResponseDTO> response = new ArrayList<>();
+        for (Venta venta : ventaRepository.findByFechaBetween(inicio, fin)) {
+            response.add(convertirADto(venta));
+        }
+        return response;
+    }
+
+    @Transactional
+    public void deleteVenta(Long id) {
+        Venta venta = ventaRepository.findById(id)
+                .orElseThrow(() -> new RecursoNoEncontradoException("Venta no encontrada"));
+        for (DetalleVenta detalle : venta.getDetalles()) {
+            Producto producto = detalle.getProducto();
+            producto.setStock(producto.getStock() + detalle.getCantidad());
+            productoRepository.save(producto);
+        }
+        ventaRepository.delete(venta);
+    }
+
+    private VentaResponseDTO convertirADto(Venta venta) {
+        List<DetalleVentaResponseDTO> detallesResponse = venta.getDetalles().stream()
                 .map(detalle -> new DetalleVentaResponseDTO(
                         detalle.getId(),
                         detalle.getCantidad(),
@@ -94,19 +139,11 @@ public VentaResponseDTO createVenta(VentaRequestDTO request) {
                 .collect(Collectors.toList());
 
         return new VentaResponseDTO(
-            ventaGuardada.getId(),
-            ventaGuardada.getFecha(),
-            ventaGuardada.getTotal(),
-            ventaGuardada.getCliente().getId(),
-            detallesResponse
-        );
-        
-
-
-        
-    
-
-
-}
+                venta.getId(),
+                venta.getFecha(),
+                venta.getTotal(),
+                venta.getCliente().getId(),
+                detallesResponse);
+    }
 
 }

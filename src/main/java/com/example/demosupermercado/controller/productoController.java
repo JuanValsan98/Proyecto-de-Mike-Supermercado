@@ -5,6 +5,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,5 +44,33 @@ public class productoController {
    @GetMapping("/{id}")
 public ResponseEntity<ProductoResponseDTO> getProductoById(@PathVariable Long id) {
     return ResponseEntity.ok(productoService.getProductoById(id));
+}
+
+@PutMapping("/{id}")
+public ResponseEntity<ProductoResponseDTO> updateProducto(
+        @PathVariable Long id,
+        @Valid @RequestBody ProductoRequestDTO request) {
+   return ResponseEntity.ok(productoService.updateProducto(id, request));
+}
+
+@DeleteMapping("/{id}")
+public ResponseEntity<Void> deleteProducto(@PathVariable Long id) {
+   productoService.deleteProducto(id);
+   return ResponseEntity.noContent().build();
+}
+
+@GetMapping("/categoria/{categoriaId}")
+public ResponseEntity<List<ProductoResponseDTO>> getProductosPorCategoria(@PathVariable Long categoriaId) {
+   return ResponseEntity.ok(productoService.getProductosPorCategoria(categoriaId));
+}
+
+@GetMapping("/buscar")
+public ResponseEntity<List<ProductoResponseDTO>> buscarProductos(@RequestParam String nombre) {
+   return ResponseEntity.ok(productoService.buscarProductosPorNombre(nombre));
+}
+
+@GetMapping("/stock-bajo")
+public ResponseEntity<List<ProductoResponseDTO>> getProductosConStockBajo(@RequestParam Long limite) {
+   return ResponseEntity.ok(productoService.getProductosConStockBajo(limite));
 }
 }
